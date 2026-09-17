@@ -13,7 +13,7 @@ const JWT_EXPIRE = process.env.JWT_EXPIRE || '30d';
 export const create_user = async (req, res) => {
   try {
     const data = req.body;
-    const { email, name, password, gender, role } = data;
+    const { email, name, password, gender } = data;
 
     if (!email || !name || !password) {
       return res.status(400).json({ status: false, msg: 'Name, email, and password are required.' });
@@ -61,7 +61,7 @@ export const create_user = async (req, res) => {
       email: email.toLowerCase(),
       password,
       gender: gender || 'Male',
-      role: role === 'admin' ? 'admin' : 'user',
+      role: 'user',  // Always register as user — only admin can promote via admin panel
       user: {
         otpExpire: expiryTime,
         userotp: randomotp,
